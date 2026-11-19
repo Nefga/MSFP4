@@ -150,7 +150,9 @@ El circuito tiene una rama principal formada por la fuente $V_e(t)$ y el resisto
 
 ### Diagrama biológico
 
-![Diagrama biológico del modelo endocrino](Sistema_endocrino_Biorender.png)
+<p align="center">
+  <img src="Sistema_endocrino_Biorender.png" alt="Diagrama biológico del modelo endocrino elaborado en BioRender" width="800">
+</p>
 
 *Figura elaborada en BioRender. Cada etapa del sistema endocrino (estímulo, glándula endocrina, secreción y transporte, comportamiento hormonal y tejido diana) se relaciona con su elemento del circuito ($V_e$, $R_1$, $C$, $V_s$, $L$ y $R_2$), junto con los flujos $F_e(t)$ y $F_s(t)$ y la tabla de parámetros de control y caso.*
 

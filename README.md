@@ -2,20 +2,41 @@ Practica 4: Modelado y control del sistema endocrino
 [![Open in MATLAB Online](https://www.mathworks.com/images/responsive/global/open-in-matlab-online.svg)](https://matlab.mathworks.com/open/github/v1?repo=Nefga/MSFP4)
 # Práctica Cuatro: Modelado y control del sistema endocrino
 
-Repositorio académico de la asignatura **Modelado de Sistemas Fisiológicos**, correspondiente al programa de **Ingeniería Biomédica** del Tecnológico Nacional de México / Instituto Tecnológico de Tijuana. Esta práctica integra modelado por analogías eléctricas, obtención de funciones de transferencia, análisis temporal y de estabilidad, diseño de controladores PID y simulación computacional *in silico*.
+## Información del estudiante
+Neltzon Farid Garcia Altamirano\[23212194]; l23212194@tijuana.tecnm.mx
 
-El caso de estudio representa la **señal hormonal** de un compartimento del sistema endocrino mediante un circuito RLC equivalente de segundo orden (secreción, transporte, almacenamiento temporal y respuesta retardada del tejido diana). Se compara una condición de referencia (**control**) con una condición alterada (**caso**), en lazo abierto y con un controlador PID que reduce la diferencia entre ambas respuestas.
+Modelado de Sistemas Fisiológicos
 
-**Docente:** Dr. Paul Antonio Valle Trujillo  
-**Correo:** paul.valle@tectijuana.edu.mx  
-**Departamento:** Ingeniería Eléctrica y Electrónica  
-**Institución:** Tecnológico Nacional de México / Instituto Tecnológico de Tijuana  
-**Asignatura:** Modelado de Sistemas Fisiológicos  
-**Programa:** Ingeniería Biomédica  
-**Estudiante:** Neltzon Farid García Altamirano · 23212194 · l23212194@tijuana.tecnm.mx
+Ingeniería Biomédica
 
-**Repositorio de la asignatura:** https://github.com/DrPaulValle/MSF-IBF1020  
-**Sede:** Blvd. Alberto Limón Padilla s/n, Tijuana, C. P. 22454, B. C., México.
+## Docente
+Dr. Paul Antonio Valle Trujillo; paul.valle@tectijuana.edu.mx
+
+Departamento de Ingeniería Eléctrica y Electrónica, Tecnológico Nacional de México/IT Tijuana, Blvd. Alberto Limón Padilla s/n, Tijuana, C.P. 22454, B.C., México.
+
+Repositorio de la asignatura: https://github.com/DrPaulValle/MSF-IBF1020
+
+## Descripción de la asignatura
+
+El modelizado de sistemas fisiológicos es una herramienta importante en Ingeniería Biomédica, permite comprender el funcionamiento del cuerpo humano, así como diseñar y evaluar terapias y dispositivos médicos; se define como el proceso de formular modelos matemáticos o computacionales que representan el comportamiento y la interacción de los sistemas biológicos y fisiológicos. Esta asignatura pretende aportar al perfil del Ingeniero Biomédico la capacidad de realizar investigación científica en el área de Biología de Sistemas con la finalidad de dirigir y participar en equipos de trabajo interdisciplinarios en contextos nacionales e internacionales, así como de proporcionar soluciones informáticas para resolver problemas en el campo de la Ingeniería Biomédica con ética profesional; lo anterior al proporcionar al estudiante bases sólidas para modelizar sistemas y diseñar controladores para la solución de problemas en las áreas de atención médica y del sector industrial médico. La construcción de analogías entre circuitos eléctricos y sistemas fisiológicos para la formulación de modelos matemáticos y el diseño de controladores mediante la experimentación in silico brindan herramientas de gran aplicación en el quehacer profesional del Ingeniero Biomédico.
+
+La asignatura de Modelado de Sistemas Fisiológicos forma parte del plan de estudios de la carrera en Ingeniería Biomédica con la siguiente competencia general del curso: Utiliza las propiedades de los circuitos RLC para describir la dinámica de sistemas fisiológicos, obtener modelos matemáticos y aplicar el control clásico, esto con el objetivo de integrar los principios de la Ingeniería de Control, la Electrónica Analógica y las Ciencias de la Computación con la Anatomía y Fisiología del cuerpo humano para proporcionar descripciones cuantitativas y cualitativas de sistemas fisiológicos complejos con el objetivo de modelizar, analizar, controlar, ilustrar y predecir su dinámica tanto en el corto como en el largo plazo.
+
+## Objetivos
+
+1. Calcular la función de transferencia.
+2. Determinar el modelo de ecuaciones integro-diferenciales.
+3. Establecer el sistema de ecuaciones diferenciales ordinarias lineales de primer orden.
+4. Emular la respuesta del circuito RLC en Simulink/Simscape al escalón, impulso, rampa y función sinusoidal.
+5. Simular la respuesta de los modelos matemáticos en Simulink/MATLAB al escalón, impulso, rampa y función sinusoidal.
+6. Sintonizar las ganancias de un controlador PID para eliminar el error entre la entrada y la salida del sistema.
+7. Obtener la respuesta en lazo abierto y en lazo cerrado con el controlador PID en Python con la función de transferencia.
+
+## Descripción detallada del sistema
+
+Un circuito RLC representa un sistema de segundo orden que modeliza, de manera simplificada, la dinámica de la señal hormonal en un compartimento del sistema endocrino: La fuente Ve(t) representa la secreción hormonal y el resistor R1 la oposición efectiva al transporte hormonal. El capacitor C representa el almacenamiento temporal de la señal hormonal en un compartimento antes de ser utilizada o eliminada. La rama formada por el inductor L en serie con el resistor R2 representa el retardo y la oposición de la respuesta del tejido diana. Los flujos Fe(t) y Fs(t) representan respectivamente el flujo de secreción y transporte, y el flujo de utilización o respuesta del órgano diana. El objetivo del modelo eléctrico es predecir la respuesta dinámica del nivel hormonal efectivo Vs(t), medido en el nodo de unión entre R1, C y L, a diferentes formas de onda de la señal de secreción Ve(t). Se comparan una condición de referencia (control) y una condición alterada (caso), esta última con C = 1000 µF y R2 = 1 kΩ en lugar de C = 1 µF y R2 = 100 kΩ.
+
+La práctica se desarrolla exclusivamente mediante experimentación *in silico*; la estrategia de control tiene propósitos académicos y de simulación, y no constituye una estrategia terapéutica.
 
 ---
 
@@ -431,7 +452,6 @@ $$
 
 donde $G_p(s)$ es la función de transferencia del bloque de planta dentro del lazo.
 
-<!-- REVISAR: en MPSFP4NFGA.slx el bloque de planta dentro de Sistema:Caso que usa el PID tiene los coeficientes de Gcontrol ([0.1,100000]/[1e-4,100.1,101000]). Si debe ser Gcaso, cambiar Gp y rehacer las métricas de la sección 10. -->
 
 ### 2. Sintonización
 

@@ -132,17 +132,9 @@ El enfoque combina **Ingeniería de Control, Electrónica Analógica, Ciencias d
 
 El circuito tiene una rama principal formada por la fuente $V_e(t)$ y el resistor $R_1$. En el nodo posterior a $R_1$ se conecta un capacitor $C$ a la referencia, en paralelo con una segunda rama formada por el inductor $L$ en serie con el resistor $R_2$. La variable $V_s(t)$ se mide en el nodo de unión entre $R_1$, $C$ y $L$.
 
-```text
-          R1         nodo Vs
- (+)●────/\/\/───────●───────┬────────────┐
-    │   →Fe(t)       │      │↓Fc(t)      │↓Fs(t)
-  Ve(t)              │     ===C           L
-    │                │      │             │
- (−)●                │      │            R2
-    │                │      │             │
-    └────────────────┴──────┴─────────────┘
-                     referencia (0 V)
-```
+![Circuito eléctrico equivalente del sistema endocrino](circuito_endocrino.png)
+
+*Circuito equivalente: fuente $V_e(t)$ (señal cuadrada), resistor $R_1$, capacitor $C_1$ a la referencia y rama en serie $L_1$–$R_2$. La salida $V_s(t)$ se mide en el nodo de unión entre $R_1$, $C_1$ y $L_1$.*
 
 ### Correspondencia entre el sistema biológico, el circuito y su interpretación
 
@@ -609,6 +601,7 @@ La práctica sigue una secuencia de **modelado, simulación, control y documenta
 ├── Garcia23212194MSPF4.mlx         # Cuaderno de MATLAB
 ├── Garcia23212194MSPF4.pdf         # Cuaderno exportado
 ├── Control_y_caso_matlab.pdf       # Figura de la respuesta al escalón
+├── circuito_endocrino.png          # Circuito eléctrico equivalente
 └── EndocrinoBiorender.jpg          # Diagrama biológico (BioRender)
 ```
 

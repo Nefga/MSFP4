@@ -486,7 +486,7 @@ Las respuestas permiten contrastar **entrada, control, caso en lazo abierto y sa
 - **Rojo/magenta punto-raya:** respuesta del control, $V_s(t)$.
 - **Morado punteado:** respuesta con PID.
 
-![Respuesta al escalón: control y caso](Control y caso.matlab.png)
+![Respuesta al escalón: control y caso](Control y caso_matlab.png)
 
 ### Respuesta en lazo abierto ante el escalón de 1 V
 

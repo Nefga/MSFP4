@@ -150,9 +150,9 @@ El circuito tiene una rama principal formada por la fuente $V_e(t)$ y el resisto
 
 ### Diagrama biológico
 
-![Diagrama biológico del modelo endocrino](EndocrinoBiorender.jpg)
+![Diagrama biológico del modelo endocrino](Sistema_endocrino_Biorender.png)
 
-*Figura elaborada en BioRender. Cada elemento del sistema endocrino se ubica junto a su equivalente en el circuito.*
+*Figura elaborada en BioRender. Cada etapa del sistema endocrino (estímulo, glándula endocrina, secreción y transporte, comportamiento hormonal y tejido diana) se relaciona con su elemento del circuito ($V_e$, $R_1$, $C$, $V_s$, $L$ y $R_2$), junto con los flujos $F_e(t)$ y $F_s(t)$ y la tabla de parámetros de control y caso.*
 
 ### Parámetros para la simulación
 
@@ -602,7 +602,7 @@ La práctica sigue una secuencia de **modelado, simulación, control y documenta
 ├── Garcia23212194MSPF4.pdf         # Cuaderno exportado
 ├── Control_y_caso_matlab.pdf       # Figura de la respuesta al escalón
 ├── circuito_endocrino.png          # Circuito eléctrico equivalente
-└── EndocrinoBiorender.jpg          # Diagrama biológico (BioRender)
+└── Sistema_endocrino_Biorender.png # Diagrama biológico (BioRender)
 ```
 
 [Volver al contenido](#contenido)
@@ -640,7 +640,7 @@ La práctica sigue una secuencia de **modelado, simulación, control y documenta
 | Simulación | Modelo `MPSFP4NFGA.slx` y respuestas en lazo abierto y cerrado |
 | Sintonización | Ganancias $k_P$, $k_I$, $k_D$ y $N$ |
 | MATLAB | Cuaderno `.mlx` y figura `Control_y_caso_matlab.pdf` |
-| Diagrama biológico | `EndocrinoBiorender.jpg` |
+| Diagrama biológico | `Sistema_endocrino_Biorender.png` |
 | Documentación | `README.md` |
 
 [Volver al contenido](#contenido)

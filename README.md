@@ -36,7 +36,7 @@ La asignatura de Modelado de Sistemas Fisiológicos forma parte del plan de estu
 
 Un circuito RLC representa un sistema de segundo orden que modeliza, de manera simplificada, la dinámica de la señal hormonal en un compartimento del sistema endocrino: La fuente Ve(t) representa la secreción hormonal y el resistor R1 la oposición efectiva al transporte hormonal. El capacitor C representa el almacenamiento temporal de la señal hormonal en un compartimento antes de ser utilizada o eliminada. La rama formada por el inductor L en serie con el resistor R2 representa el retardo y la oposición de la respuesta del tejido diana. Los flujos Fe(t) y Fs(t) representan respectivamente el flujo de secreción y transporte, y el flujo de utilización o respuesta del órgano diana. El objetivo del modelo eléctrico es predecir la respuesta dinámica del nivel hormonal efectivo Vs(t), medido en el nodo de unión entre R1, C y L, a diferentes formas de onda de la señal de secreción Ve(t). Se comparan una condición de referencia (control) y una condición alterada (caso), esta última con C = 1000 µF y R2 = 1 kΩ en lugar de C = 1 µF y R2 = 100 kΩ.
 
-La práctica se desarrolla exclusivamente mediante experimentación *in silico*; la estrategia de control tiene propósitos académicos y de simulación, y no constituye una estrategia terapéutica.
+La práctica se desarrolla mediante experimentación *in silico* y se complementa con la implementación física del circuito en el laboratorio; la estrategia de control tiene propósitos académicos y de simulación, y no constituye una estrategia terapéutica.
 
 ---
 
@@ -75,7 +75,7 @@ La condición **caso** se obtiene modificando dos componentes respecto del contr
 
 Se estudian el error en estado estacionario y la estabilidad a través de los polos de cada modelo. Posteriormente se aplica un escalón unitario y se contrastan las funciones de transferencia y un modelo de ecuaciones integro-diferenciales (EID) implementado por bloques en Simulink. Se incorpora un **controlador PID** cuya señal de error es la diferencia entre la respuesta del control (referencia) y la salida del lazo, con ganancias sintonizadas con la herramienta *Tune* de Simulink.
 
-La práctica se desarrolla **exclusivamente mediante experimentación *in silico***. La estrategia de control tiene propósitos académicos y de simulación, y no constituye una estrategia terapéutica.
+La práctica se desarrolla mediante experimentación ***in silico*** y se complementa con la **implementación física del circuito en el laboratorio**, cuya respuesta al escalón, en lazo abierto y con el controlador PID analógico, se registró con un osciloscopio y se compara con la simulada. La estrategia de control tiene propósitos académicos y de simulación, y no constituye una estrategia terapéutica.
 
 **Palabras clave:** sistema endocrino; señal hormonal; circuito RLC; función de transferencia; segundo orden; controlador PID; MATLAB; Simulink; simulación *in silico*.
 
@@ -486,8 +486,6 @@ Las respuestas permiten contrastar **entrada, control, caso en lazo abierto y sa
 - **Rojo/magenta punto-raya:** respuesta del control, $V_s(t)$.
 - **Morado punteado:** respuesta con PID.
 
-
-
 ### Respuesta en lazo abierto ante el escalón de 1 V
 
 | Instante | Control | Caso |
@@ -515,12 +513,44 @@ La salida con PID sigue prácticamente la misma curva que el control: el único 
 | Respuesta al escalón (control, caso y PID) | [`Control_y_caso_matlab.pdf`](Control_y_caso_matlab.pdf) |
 | Cuaderno exportado | [`Garcia23212194MSPF4.pdf`](Garcia23212194MSPF4.pdf) |
 
+### Validación experimental en laboratorio
+
+Además de la simulación, los circuitos del control y del caso se construyeron en protoboard en el laboratorio de electrónica con los valores comerciales de la tabla de parámetros, y el PID se implementó como controlador analógico conectado al circuito del caso. La aproximación experimental al escalón se generó con un generador de funciones configurado como en las prácticas anteriores:
+
+| Parámetro del generador | Valor |
+|---|---|
+| Señal | Pulse |
+| Frecuencia | $50\ \mathrm{mHz}$ |
+| Amplitud | $1\ \mathrm{V_{pp}}$ |
+| Offset | $500\ \mathrm{mV_{DC}}$ |
+| Ciclo de trabajo | $99\ \%$ |
+
+La señal pasa de $0$ a $1\ \mathrm{V}$ y permanece en alto el tiempo suficiente para observar el transitorio y el estado estacionario. Las cuatro señales se registraron simultáneamente con un osciloscopio OWON (escala vertical de $500\ \mathrm{mV/div}$, base de tiempo de $1\ \mathrm{s/div}$ y muestreo de $500\ \mathrm{S/s}$):
+
+| Canal | Señal | Lectura en el osciloscopio |
+|---|---|---|
+| 1 | Entrada $V_e(t)$ | Máximo de $980\ \mathrm{mV}$; $V_{pp}=980\ \mathrm{mV}$ |
+| 2 | Control | Máximo de $960\ \mathrm{mV}$; $V_{pp}=980\ \mathrm{mV}$ |
+| 3 | Caso con PID | Se superpone con la entrada y el control |
+| 4 | Caso en lazo abierto | Se estabiliza en $\approx0.5\ \mathrm{V}$ (lectura de pantalla), con un transitorio de $\approx2\ \mathrm{s}$ |
+
+Como la entrada real alcanza $0.98\ \mathrm{V}$ y no $1\ \mathrm{V}$, los valores simulados se comparan escalados por ese factor:
+
+| Magnitud | Simulación ($V_e=1\ \mathrm{V}$) | Simulación escalada ($V_e=0.98\ \mathrm{V}$) | Medición |
+|---|---:|---:|---:|
+| Valor final del control | $0.9901\ \mathrm{V}$ | $0.970\ \mathrm{V}$ | $0.960\ \mathrm{V}$ |
+| Valor final del caso | $0.5\ \mathrm{V}$ | $0.490\ \mathrm{V}$ | $\approx0.49\ \mathrm{V}$ |
+| Tiempo del caso al 98 % del valor final | $\approx1.96\ \mathrm{s}$ | $\approx1.96\ \mathrm{s}$ | $\approx2\ \mathrm{s}$ |
+
+El registro físico reproduce el comportamiento simulado: el control y el caso con PID alcanzan casi de inmediato el nivel de la entrada, mientras que el caso en lazo abierto crece de forma exponencial y se estabiliza aproximadamente en la mitad de ese valor. La diferencia de $\approx1\ \%$ en el valor final del control puede atribuirse a la tolerancia de los componentes y a la resolución del osciloscopio.
+
 ### Discusión
 
 - **Efecto de $C$ y $R_2$.** El aumento de $C$ de $1\,\mu\mathrm{F}$ a $1000\,\mu\mathrm{F}$ vuelve la respuesta unas 500 veces más lenta, y la disminución de $R_2$ de $100\,\mathrm{k}\Omega$ a $1\,\mathrm{k}\Omega$ reduce el valor final de $0.990$ a $0.5$.
 - **Orden del sistema.** Ambos modelos son de segundo orden por la presencia de $C$ y $L$, pero el polo rápido se cancela con el cero y la respuesta es prácticamente de primer orden.
 - **Estabilidad.** Todos los polos son reales y negativos en lazo abierto; ninguna condición es oscilatoria.
 - **Error.** El error en estado estacionario depende solo de $R_1$ y $R_2$; la acción integral del PID lo lleva a cero respecto de la referencia.
+- **Validación física.** La medición en el laboratorio coincide con la simulación en el valor final y en la rapidez de la respuesta del caso, y el PID analógico lleva al caso hasta el nivel del control, lo que respalda el modelo y la sintonización.
 - **Alcance.** El controlador se diseñó con fines académicos y de simulación; no constituye una estrategia terapéutica.
 
 [Volver al contenido](#contenido)
@@ -559,7 +589,7 @@ El procedimiento integra la formulación analítica y la experimentación *in si
 <a id="actividades"></a>
 ## Actividades del estudiante
 
-La práctica sigue una secuencia de **modelado, simulación, control y documentación**, desarrollada exclusivamente *in silico*.
+La práctica sigue una secuencia de **modelado, simulación, control y documentación**, desarrollada mediante experimentación *in silico* y validada en el laboratorio.
 
 ### Etapa 1. Formulación y análisis
 
@@ -575,6 +605,7 @@ La práctica sigue una secuencia de **modelado, simulación, control y documenta
 - [x] Implementar las funciones de transferencia del control y del caso en Simulink.
 - [x] Implementar los subsistemas EID por bloques.
 - [x] Obtener la respuesta en lazo abierto del control y del caso.
+- [x] Implementar en protoboard los circuitos del control y del caso, y el controlador PID analógico, y registrar la respuesta al escalón con un osciloscopio.
 
 ### Etapa 3. Diseño y comprobación del controlador
 
@@ -642,6 +673,7 @@ La práctica sigue una secuencia de **modelado, simulación, control y documenta
 | Simulación | Modelo `MPSFP4NFGA.slx` y respuestas en lazo abierto y cerrado |
 | Sintonización | Ganancias $k_P$, $k_I$, $k_D$ y $N$ |
 | MATLAB | Cuaderno `.mlx` y figura `Control_y_caso_matlab.pdf` |
+| Validación experimental | Registro de osciloscopio de la respuesta al escalón del circuito físico |
 | Diagrama biológico | `Sistema_endocrino_Biorender.png` |
 | Documentación | `README.md` |
 
